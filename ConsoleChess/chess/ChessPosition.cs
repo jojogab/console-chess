@@ -5,7 +5,7 @@ namespace ConsoleChess.chess
     internal class ChessPosition
     {
         public char Column { get; set; }
-        public int Line { get; set; };
+        public int Line { get; set; }
 
         public ChessPosition(char column, int line)
         {
