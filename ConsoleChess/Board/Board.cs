@@ -23,5 +23,11 @@ namespace ConsoleChess.board
         {
             return Pieces[line, column];
         }
+
+        public void putPiece(Piece p, Position pos)
+        {
+            Pieces[pos.Line, pos.Column] = p;
+            p.Position = pos;
+        }
     }
 }
