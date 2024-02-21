@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace ConsoleChess.Board
 {
-    internal class Position
+    internal class Board
     {
         public int Line { get; set; }
         public int Column { get; set; }
+        private Piece[,] Pieces { get; set; }
 
-        public Position(int line, int column)
+        public Board(int line, int column)
         {
             Line = line;
             Column = column;
+            Pieces = new Piece[Line, Column];
         }
-
-
     }
 }
