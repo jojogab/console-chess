@@ -1,3 +1,6 @@
-﻿using ConsoleChess.Board;
+﻿using ConsoleChess;
+using ConsoleChess.board;
 
-Console.WriteLine("Hello, World!");
+Board board = new Board(8, 8);
+
+Screen.printBoard(board);

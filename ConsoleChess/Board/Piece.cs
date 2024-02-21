@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ConsoleChess.Board.Enums;
+using ConsoleChess.board.Enums;
 
-namespace ConsoleChess.Board
+namespace ConsoleChess.board
 {
     internal class Piece
     {

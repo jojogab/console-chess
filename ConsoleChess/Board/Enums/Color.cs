@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleChess.Board.Enums
+namespace ConsoleChess.board.Enums
 {
     internal enum Color
     {
