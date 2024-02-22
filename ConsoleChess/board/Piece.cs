@@ -21,5 +21,10 @@ namespace ConsoleChess.board
             Board = board;
             QntMoves = 0;
         }
+
+        public void increasemoves()
+        {
+            QntMoves++;
+        }
     }
 }

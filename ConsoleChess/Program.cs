@@ -6,17 +6,22 @@ using ConsoleChess.chess;
 
 try
 {
-    Board board = new Board(8, 8);
+    ChessMatch match = new ChessMatch();
 
-    board.putPiece(new Tower(board, Color.Black), new Position(0, 0));
-    board.putPiece(new Tower(board, Color.Black), new Position(1, 5));
-    board.putPiece(new King(board, Color.Black), new Position(0, 2));
+    while (!match.Finished)
+    {
+        Console.Clear();
+        Screen.printBoard(match.Board);
 
-    board.putPiece(new Tower(board, Color.White), new Position(7, 0));
-    board.putPiece(new Tower(board, Color.White), new Position(6, 5));
-    board.putPiece(new King(board, Color.White), new Position(7, 2));
+        Console.WriteLine();
+        Console.Write("Origem: ");
+        Position origin = Screen.readChessPosition().toPosition();
 
-    Screen.printBoard(board);   
+        Console.Write("Destino: ");
+        Position destiny = Screen.readChessPosition().toPosition();
+
+        match.executemove(origin, destiny);
+    }  
 }
 catch (BoardException e)
 {
