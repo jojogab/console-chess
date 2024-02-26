@@ -55,8 +55,10 @@ namespace ConsoleChess.board
 
         public bool validPosition (Position pos)
         {
-            if(pos.Line < 0 || pos.Line >= Lines || pos.Column < 0 || pos.Column >= Lines) return false;
-
+            if (pos.Line < 0 || pos.Line >= Lines || pos.Column < 0 || pos.Column >= Lines)
+            {
+                return false;
+            }
             return true;
         }
 

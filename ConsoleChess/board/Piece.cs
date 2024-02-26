@@ -7,7 +7,7 @@ using ConsoleChess.board.Enums;
 
 namespace ConsoleChess.board
 {
-    internal class Piece
+    internal abstract class Piece
     {
         public Position Position { get; set; }
         public Color Color { get; protected set; }
@@ -21,6 +21,8 @@ namespace ConsoleChess.board
             Board = board;
             QntMoves = 0;
         }
+
+        public abstract bool[,] possibleMoves();
 
         public void increasemoves()
         {

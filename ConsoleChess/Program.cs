@@ -17,6 +17,11 @@ try
         Console.Write("Origem: ");
         Position origin = Screen.readChessPosition().toPosition();
 
+        bool[,] possibleMoves = match.Board.piece(origin).possibleMoves();
+
+        Console.Clear();
+        Screen.printBoard(match.Board, possibleMoves);
+
         Console.Write("Destino: ");
         Position destiny = Screen.readChessPosition().toPosition();
 
