@@ -28,5 +28,26 @@ namespace ConsoleChess.board
         {
             QntMoves++;
         }
+
+        public bool existPossibleMoves()
+        {
+            bool[,] mat = possibleMoves();
+            for (int i = 0; i < Board.Lines; i++)
+            {
+                for (int j = 0; j < Board.Columns; j++)
+                {
+                    if (mat[i, j])
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public bool canMoveTo(Position pos)
+        {
+            return possibleMoves()[pos.Line, pos.Column];
+        }
     }
 }

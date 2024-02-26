@@ -10,22 +10,35 @@ try
 
     while (!match.Finished)
     {
-        Console.Clear();
-        Screen.printBoard(match.Board);
+        try
+        {
+            Console.Clear();
+            Screen.printBoard(match.Board);
+            Console.WriteLine();
+            Console.WriteLine($"Turn: {match.Turn}");
+            Console.WriteLine($"Waiting move: {match.AtualPlayer}");
 
-        Console.WriteLine();
-        Console.Write("Origem: ");
-        Position origin = Screen.readChessPosition().toPosition();
+            Console.WriteLine();
+            Console.Write("Origin: ");
+            Position origin = Screen.readChessPosition().toPosition();
+            match.validateOriginPosition(origin);
 
-        bool[,] possibleMoves = match.Board.piece(origin).possibleMoves();
+            bool[,] possibleMoves = match.Board.piece(origin).possibleMoves();
 
-        Console.Clear();
-        Screen.printBoard(match.Board, possibleMoves);
+            Console.Clear();
+            Screen.printBoard(match.Board, possibleMoves);
 
-        Console.Write("Destino: ");
-        Position destiny = Screen.readChessPosition().toPosition();
+            Console.Write("Destiny: ");
+            Position destiny = Screen.readChessPosition().toPosition();
+            match.validateDestinyPosition(origin, destiny);
 
-        match.executemove(origin, destiny);
+            match.makeMove(origin, destiny);
+        }
+        catch(BoardException e)
+        {
+            Console.WriteLine(e.Message);
+            Console.ReadLine();
+        }
     }  
 }
 catch (BoardException e)
