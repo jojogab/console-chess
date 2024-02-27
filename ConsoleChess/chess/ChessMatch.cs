@@ -13,6 +13,7 @@ namespace ConsoleChess.chess
         public bool Finished { get; private set; }
         private HashSet<Piece> Pieces;
         private HashSet<Piece> Captured;
+        public bool Check { get; private set; }
 
         public ChessMatch()
         {
@@ -20,12 +21,13 @@ namespace ConsoleChess.chess
             Turn = 1;
             AtualPlayer = Color.White;
             Finished = false;
+            Check = false;
             Pieces = new HashSet<Piece>();
             Captured = new HashSet<Piece>();
             putPieces();
         }
 
-        public void executemove(Position origin, Position destiny)
+        public Piece executemove(Position origin, Position destiny)
         {
             Piece p = Board.removePiece(origin);
             p.increasemoves();
@@ -35,14 +37,42 @@ namespace ConsoleChess.chess
             {
                 Captured.Add(capturedpiece);
             }
+            return capturedpiece;
+        }
+
+        public void undoMove(Position origin, Position destiny, Piece capturedPiece)
+        {
+            Piece p = Board.removePiece(destiny);
+            p.decreasemoves();
+            if(capturedPiece != null)
+            {
+                Board.putPiece(capturedPiece, destiny);
+                Captured.Remove(capturedPiece);
+            }
+            Board.putPiece(p, origin);
         }
 
         public void makeMove(Position origin, Position destiny)
         {
-            executemove(origin, destiny);
+            Piece capturedpiece = executemove(origin, destiny);
+
+            if (isInCheck(AtualPlayer))
+            {
+                undoMove(origin, destiny, capturedpiece);
+                throw new BoardException("You can't put yourself in check!");
+            }
+            Color test = opponent(AtualPlayer);
+            if (isInCheck(test))
+            {
+                Check = true;
+            }
+            else
+            {
+                Check = false;
+            }
+
             Turn++;
             changePlayer();
-
         }
 
         public void validateOriginPosition(Position pos)
@@ -106,6 +136,49 @@ namespace ConsoleChess.chess
             }
             aux.ExceptWith(capturedPieces(color));
             return aux;
+        }
+
+        private Color opponent(Color color)
+        {
+            if(color == Color.White)
+            {
+                return Color.Black;
+            }
+            else
+            {
+                return Color.White;
+            }
+        }
+
+        private Piece king(Color color)
+        {
+            foreach(Piece x in inGamePieces(color))
+            {
+                if (x is King)
+                {
+                    return x;
+                }
+            }
+            return null;
+        }
+
+        public bool isInCheck(Color color)
+        {
+            Piece k = king(color);
+            if (k == null)
+            {
+                throw new BoardException($"There is no {color} king on the board!");
+            }
+
+            foreach(Piece x in inGamePieces(opponent(color)))
+            {
+                bool[,] mat = x.possibleMoves();
+                if (mat[k.Position.Line, k.Position.Column])
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public void putNewPiece(char column, int line, Piece piece)

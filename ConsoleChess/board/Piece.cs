@@ -29,6 +29,11 @@ namespace ConsoleChess.board
             QntMoves++;
         }
 
+        public void decreasemoves()
+        {
+            QntMoves--;
+        }
+
         public bool existPossibleMoves()
         {
             bool[,] mat = possibleMoves();
