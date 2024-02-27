@@ -13,10 +13,7 @@ try
         try
         {
             Console.Clear();
-            Screen.printBoard(match.Board);
-            Console.WriteLine();
-            Console.WriteLine($"Turn: {match.Turn}");
-            Console.WriteLine($"Waiting move: {match.AtualPlayer}");
+            Screen.printMatch(match);
 
             Console.WriteLine();
             Console.Write("Origin: ");
