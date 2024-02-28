@@ -144,8 +144,23 @@ namespace ConsoleChess.chess
                 undoMove(origin, destiny, capturedpiece);
                 throw new BoardException("You can't put yourself in check!");
             }
-            Color test = opponent(AtualPlayer);
-            if (isInCheck(test))
+
+            Piece p = Board.piece(destiny);
+
+            //#SpecialMove Promotion
+            if(p is Pawn)
+            {
+                if(p.Color == Color.White && destiny.Line == 0 || p.Color == Color.Black && destiny.Line == 7)
+                {
+                    p = Board.removePiece(destiny);
+                    Pieces.Remove(p);
+                    Piece queen = new Queen(Board, p.Color);
+                    Board.putPiece(queen, destiny);
+                    Pieces.Add(queen);
+                }
+            }
+
+            if (isInCheck(opponent(AtualPlayer)))
             {
                 Check = true;
             }
@@ -162,8 +177,6 @@ namespace ConsoleChess.chess
                 Turn++;
                 changePlayer();
             }
-
-            Piece p = Board.piece(destiny);
 
             //#SpecialMove En Passant
             if(p is Pawn && (destiny.Line == origin.Line - 2 || destiny.Line == origin.Line + 2))
