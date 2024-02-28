@@ -14,6 +14,7 @@ namespace ConsoleChess.chess
         private HashSet<Piece> Pieces;
         private HashSet<Piece> Captured;
         public bool Check { get; private set; }
+        public Piece VulnerableEnPassant { get; private set; }
 
         public ChessMatch()
         {
@@ -22,6 +23,7 @@ namespace ConsoleChess.chess
             AtualPlayer = Color.White;
             Finished = false;
             Check = false;
+            VulnerableEnPassant = null;
             Pieces = new HashSet<Piece>();
             Captured = new HashSet<Piece>();
             putPieces();
@@ -58,6 +60,25 @@ namespace ConsoleChess.chess
                 Board.putPiece(T, destinyT);
             }
 
+            //#SpecialMove En Passant
+            if(p is Pawn)
+            {
+                if(origin.Column != destiny.Column && capturedpiece == null)
+                {
+                    Position posP;
+                    if(p.Color == Color.White)
+                    {
+                        posP = new Position(destiny.Line + 1, destiny.Column);
+                    }
+                    else
+                    {
+                        posP = new Position(destiny.Line - 1, destiny.Column);
+                    }
+                    capturedpiece = Board.removePiece(posP);
+                    Captured.Add(capturedpiece);
+                }
+            }
+
             return capturedpiece;
         }
 
@@ -91,6 +112,27 @@ namespace ConsoleChess.chess
                 T.decreasemoves();
                 Board.putPiece(T, originT);
             }
+
+            //#SpecialMove En Passant
+            if (p is Pawn)
+            {
+                if (origin.Column != destiny.Column && capturedPiece == VulnerableEnPassant)
+                {
+                    Piece pawn = Board.removePiece(destiny);
+
+                    Position posP;
+                    if (p.Color == Color.White)
+                    {
+                        posP = new Position(3, destiny.Column);
+                    }
+                    else
+                    {
+                        posP = new Position(4, destiny.Column);
+                    }
+                    Board.putPiece(pawn, posP);
+                }
+
+            }
         }
 
         public void makeMove(Position origin, Position destiny)
@@ -119,6 +161,18 @@ namespace ConsoleChess.chess
             {
                 Turn++;
                 changePlayer();
+            }
+
+            Piece p = Board.piece(destiny);
+
+            //#SpecialMove En Passant
+            if(p is Pawn && (destiny.Line == origin.Line - 2 || destiny.Line == origin.Line + 2))
+            {
+                VulnerableEnPassant = p;
+            }
+            else
+            {
+                VulnerableEnPassant = null;
             }
         }
 
@@ -275,14 +329,14 @@ namespace ConsoleChess.chess
             putNewPiece('f', 1, new Bishop(Board, Color.White));
             putNewPiece('g', 1, new Horse(Board, Color.White));
             putNewPiece('h', 1, new Tower(Board, Color.White));
-            putNewPiece('a', 2, new Pawn(Board, Color.White));
-            putNewPiece('b', 2, new Pawn(Board, Color.White));
-            putNewPiece('c', 2, new Pawn(Board, Color.White));
-            putNewPiece('d', 2, new Pawn(Board, Color.White));
-            putNewPiece('e', 2, new Pawn(Board, Color.White));
-            putNewPiece('f', 2, new Pawn(Board, Color.White));
-            putNewPiece('g', 2, new Pawn(Board, Color.White));
-            putNewPiece('h', 2, new Pawn(Board, Color.White));
+            putNewPiece('a', 2, new Pawn(Board, Color.White, this));
+            putNewPiece('b', 2, new Pawn(Board, Color.White, this));
+            putNewPiece('c', 2, new Pawn(Board, Color.White, this));
+            putNewPiece('d', 2, new Pawn(Board, Color.White, this));
+            putNewPiece('e', 2, new Pawn(Board, Color.White, this));
+            putNewPiece('f', 2, new Pawn(Board, Color.White, this));
+            putNewPiece('g', 2, new Pawn(Board, Color.White, this));
+            putNewPiece('h', 2, new Pawn(Board, Color.White, this));
 
             putNewPiece('a', 8, new Tower(Board, Color.Black));
             putNewPiece('b', 8, new Horse(Board, Color.Black));
@@ -292,14 +346,14 @@ namespace ConsoleChess.chess
             putNewPiece('f', 8, new Bishop(Board, Color.Black));
             putNewPiece('g', 8, new Horse(Board, Color.Black));
             putNewPiece('h', 8, new Tower(Board, Color.Black));
-            putNewPiece('a', 7, new Pawn(Board, Color.Black));
-            putNewPiece('b', 7, new Pawn(Board, Color.Black));
-            putNewPiece('c', 7, new Pawn(Board, Color.Black));
-            putNewPiece('d', 7, new Pawn(Board, Color.Black));
-            putNewPiece('e', 7, new Pawn(Board, Color.Black));
-            putNewPiece('f', 7, new Pawn(Board, Color.Black));
-            putNewPiece('g', 7, new Pawn(Board, Color.Black));
-            putNewPiece('h', 7, new Pawn(Board, Color.Black));
+            putNewPiece('a', 7, new Pawn(Board, Color.Black, this));
+            putNewPiece('b', 7, new Pawn(Board, Color.Black, this));
+            putNewPiece('c', 7, new Pawn(Board, Color.Black, this));
+            putNewPiece('d', 7, new Pawn(Board, Color.Black, this));
+            putNewPiece('e', 7, new Pawn(Board, Color.Black, this));
+            putNewPiece('f', 7, new Pawn(Board, Color.Black, this));
+            putNewPiece('g', 7, new Pawn(Board, Color.Black, this));
+            putNewPiece('h', 7, new Pawn(Board, Color.Black, this));
         }
     }
 }
