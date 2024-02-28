@@ -32,7 +32,7 @@ namespace ConsoleChess.chess
                 {
                     break;
                 }
-                pos.Column = pos.Column - 1;
+                pos.setPosition(pos.Line - 1, pos.Column - 1);
             }
 
             //North East
@@ -44,7 +44,7 @@ namespace ConsoleChess.chess
                 {
                     break;
                 }
-                pos.Column = pos.Column - 1;
+                pos.setPosition(pos.Line - 1, pos.Column + 1);
             }
 
             //South East
@@ -56,7 +56,7 @@ namespace ConsoleChess.chess
                 {
                     break;
                 }
-                pos.Column = pos.Column - 1;
+                pos.setPosition(pos.Line + 1, pos.Column + 1);
             }
 
             //South West
@@ -68,7 +68,7 @@ namespace ConsoleChess.chess
                 {
                     break;
                 }
-                pos.Column = pos.Column - 1;
+                pos.setPosition(pos.Line + 1, pos.Column - 1);
             }
 
             return mat;

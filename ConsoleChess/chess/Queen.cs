@@ -33,7 +33,7 @@ namespace ConsoleChess.chess
                 {
                     break;
                 }
-                pos.Column = pos.Column - 1;
+                pos.setPosition(pos.Line - 1, pos.Column);
             }
 
             // North East
@@ -45,7 +45,7 @@ namespace ConsoleChess.chess
                 {
                     break;
                 }
-                pos.Column = pos.Column - 1;
+                pos.setPosition(pos.Line - 1, pos.Column + 1);
             }
 
             // Right
@@ -57,7 +57,7 @@ namespace ConsoleChess.chess
                 {
                     break;
                 }
-                pos.Column = pos.Column - 1;
+                pos.setPosition(pos.Line, pos.Column + 1);
             }
 
             //South East
@@ -69,7 +69,7 @@ namespace ConsoleChess.chess
                 {
                     break;
                 }
-                pos.Column = pos.Column - 1;
+                pos.setPosition(pos.Line + 1, pos.Column + 1);
             }
 
             //Below
@@ -81,7 +81,7 @@ namespace ConsoleChess.chess
                 {
                     break;
                 }
-                pos.Column = pos.Column - 1;
+                pos.setPosition(pos.Line + 1, pos.Column);
             }
 
             //South West
@@ -93,7 +93,7 @@ namespace ConsoleChess.chess
                 {
                     break;
                 }
-                pos.Column = pos.Column - 1;
+                pos.setPosition(pos.Line + 1, pos.Column - 1);
             }
 
             //Left
@@ -105,7 +105,7 @@ namespace ConsoleChess.chess
                 {
                     break;
                 }
-                pos.Column = pos.Column - 1;
+                pos.setPosition(pos.Line, pos.Column - 1);
             }
 
             //North West
@@ -117,7 +117,7 @@ namespace ConsoleChess.chess
                 {
                     break;
                 }
-                pos.Column = pos.Column - 1;
+                pos.setPosition(pos.Line - 1, pos.Column - 1);
             }
 
             return mat;

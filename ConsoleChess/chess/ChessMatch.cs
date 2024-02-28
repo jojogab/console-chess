@@ -37,6 +37,27 @@ namespace ConsoleChess.chess
             {
                 Captured.Add(capturedpiece);
             }
+
+            //#SpecialMove Little Roque
+            if(p is King && destiny.Column == origin.Column + 2)
+            {
+                Position originT = new Position(origin.Line, origin.Column + 3);
+                Position destinyT = new Position(origin.Line, origin.Column + 1);
+                Piece T = Board.removePiece(originT);
+                T.increasemoves();
+                Board.putPiece(T, destinyT);
+            }
+
+            //#SpecialMove Big Roque
+            if (p is King && destiny.Column == origin.Column - 2)
+            {
+                Position originT = new Position(origin.Line, origin.Column - 4);
+                Position destinyT = new Position(origin.Line, origin.Column - 1);
+                Piece T = Board.removePiece(originT);
+                T.increasemoves();
+                Board.putPiece(T, destinyT);
+            }
+
             return capturedpiece;
         }
 
@@ -50,6 +71,26 @@ namespace ConsoleChess.chess
                 Captured.Remove(capturedPiece);
             }
             Board.putPiece(p, origin);
+
+            //#SpecialMove Little Roque
+            if (p is King && destiny.Column == origin.Column + 2)
+            {
+                Position originT = new Position(origin.Line, origin.Column + 3);
+                Position destinyT = new Position(origin.Line, origin.Column + 1);
+                Piece T = Board.removePiece(destinyT);
+                T.decreasemoves();
+                Board.putPiece(T, originT);
+            }
+
+            //#SpecialMove Big Roque
+            if (p is King && destiny.Column == origin.Column - 2)
+            {
+                Position originT = new Position(origin.Line, origin.Column - 4);
+                Position destinyT = new Position(origin.Line, origin.Column - 1);
+                Piece T = Board.removePiece(destinyT);
+                T.decreasemoves();
+                Board.putPiece(T, originT);
+            }
         }
 
         public void makeMove(Position origin, Position destiny)
@@ -230,7 +271,7 @@ namespace ConsoleChess.chess
             putNewPiece('b', 1, new Horse(Board, Color.White));
             putNewPiece('c', 1, new Bishop(Board, Color.White));
             putNewPiece('d', 1, new Queen(Board, Color.White));
-            putNewPiece('e', 1, new King(Board, Color.White));
+            putNewPiece('e', 1, new King(Board, Color.White, this));
             putNewPiece('f', 1, new Bishop(Board, Color.White));
             putNewPiece('g', 1, new Horse(Board, Color.White));
             putNewPiece('h', 1, new Tower(Board, Color.White));
@@ -247,7 +288,7 @@ namespace ConsoleChess.chess
             putNewPiece('b', 8, new Horse(Board, Color.Black));
             putNewPiece('c', 8, new Bishop(Board, Color.Black));
             putNewPiece('d', 8, new Queen(Board, Color.Black));
-            putNewPiece('e', 8, new King(Board, Color.Black));
+            putNewPiece('e', 8, new King(Board, Color.Black, this));
             putNewPiece('f', 8, new Bishop(Board, Color.Black));
             putNewPiece('g', 8, new Horse(Board, Color.Black));
             putNewPiece('h', 8, new Tower(Board, Color.Black));
