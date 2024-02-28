@@ -36,7 +36,9 @@ try
             Console.WriteLine(e.Message);
             Console.ReadLine();
         }
-    }  
+    }
+    Console.Clear();
+    Screen.printMatch(match);
 }
 catch (BoardException e)
 {
